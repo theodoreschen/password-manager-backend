@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     if args.start:
         if os.path.exists(f"./{db_filename}"):
-            print("Proceed as normal...")
+            APP.run()
         else:
             print(f"Database file {db_filename} does not exist. Run '{__file__} --init' first")
     elif args.init:

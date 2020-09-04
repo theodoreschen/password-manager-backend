@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import yaml
 import traceback
 
-_db_filename = "test"
+_db_filename = "test.db"
 _password = None
 
 try:
@@ -20,7 +20,7 @@ except AttributeError:
 
 # TODO: figure out how to handle passwords
 
-APP = Flask("PasswordManager", static_url_path="")
+APP = Flask("PasswordManager")
 APP.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{_db_filename}'
 APP.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 DB = SQLAlchemy(APP)
