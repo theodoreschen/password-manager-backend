@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "type": "object",
+    "properties": {
+        "sitename": {"type": "string"},
+        "weburl": {"type": "string"},
+        "hashalgo": {
+            "enum": ["MD5", "SHA1", "SHA256"]
+        },
+        "seed": {"type": "string"},
+        "pwlen": {"type": "integer"},
+        "comments": {"type": "string"}
+    },
+    "required": [
+        "sitename",
+        "weburl",
+        "hashalgo",
+        "seed",
+        "pwlen"
+    ]
+}

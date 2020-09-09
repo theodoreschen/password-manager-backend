@@ -28,7 +28,7 @@ if __name__ == "__main__":
     args = ap.parse_args()
 
     if args.start:
-        if os.path.exists(f"./{db_filename}"):
+        if os.path.exists(f"{db_filename}"):
             APP.run()
         else:
             print(f"Database file {db_filename} does not exist. Run '{__file__} --init' first")
