@@ -2,6 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import yaml
 import traceback
+from ._views import _VIEW_FUNCS
+from ._models import PasswordEntriesFactory, HashAlgorithms, Models
 
 _db_filename = "test.db"
 _password = None
@@ -24,3 +26,22 @@ APP = Flask("PasswordManager")
 APP.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{_db_filename}'
 APP.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 DB = SQLAlchemy(APP)
+
+_passwd_entries = PasswordEntriesFactory(DB)
+MODELS = Models(HashAlgorithms, _passwd_entries)
+
+print(MODELS.PasswordEntries)
+
+@APP.route("/")
+def webpage():
+    return _VIEW_FUNCS["webpage"](APP, DB, MODELS)
+
+
+@APP.route("/update", methods=["POST"])
+def update():
+    return _VIEW_FUNCS["update"](APP, DB, MODELS)
+
+
+@APP.route("/getall")
+def getall():
+    return _VIEW_FUNCS["getall"](APP, DB, MODELS)
