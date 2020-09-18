@@ -47,3 +47,8 @@ def update():
 @APP.route("/getall")
 def getall():
     return _VIEW_FUNCS["getall"](APP, DB, MODELS)
+
+
+@APP.route("/delete", methods=["POST"])
+def delete():
+    return _VIEW_FUNCS["delete"](APP, DB, MODELS)

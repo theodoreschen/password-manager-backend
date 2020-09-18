@@ -38,8 +38,32 @@ def _getall(app: Flask, db: SQLAlchemy, models: Models):
     return jsonify(res), 200
 
 
+def _delete(app: Flask, db: SQLAlchemy, models: Models):
+    PasswordEntries = models.PasswordEntries
+    data = request.get_json()
+    try:
+        jsonschema.validate(data, _ENTRY_UPDATE_SCHEMA)
+    except jsonschema.ValidationError:
+        return "Invalid JSON payload", 400
+
+    entry = PasswordEntries(
+        sitename=data["sitename"],
+        weburl=data["weburl"],
+        hashalgo=data["hashalgo"],
+        seed=data["seed"],
+        pwlen=data["pwlen"],
+        comments=data["comments"]
+    )
+
+    db.session.delete(entry)
+    db.session.commit()
+
+    return "", 200
+
+
 _VIEW_FUNCS = {
     "webpage": _webpage,
     "update": _update,
-    "getall": _getall
+    "getall": _getall,
+    "delete": _delete
 }
