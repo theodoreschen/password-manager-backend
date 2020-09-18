@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import yaml
 import traceback
@@ -25,6 +26,7 @@ except AttributeError:
 APP = Flask("PasswordManager")
 APP.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{_db_filename}'
 APP.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+CORS(APP)
 DB = SQLAlchemy(APP)
 
 _passwd_entries = PasswordEntriesFactory(DB)
