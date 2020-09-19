@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from ._models import Models
+import jsonschema
+from ._schemas import _ENTRY_UPDATE_SCHEMA
 
 
 def _webpage(app: Flask, db: SQLAlchemy, models: Models):
@@ -14,6 +16,9 @@ def _update(app: Flask, db: SQLAlchemy, models: Models):
         jsonschema.validate(data, _ENTRY_UPDATE_SCHEMA)
     except jsonschema.ValidationError:
         return "Invalid JSON payload", 400
+
+    if "comments" not in data:
+        data["comments"] = ""
     
     entry = PasswordEntries(
         sitename=data["sitename"],
